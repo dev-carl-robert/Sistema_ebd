@@ -108,6 +108,10 @@ while continuar=="s":
         
         Professores.append(novo_professor)
         print(f"professor: {cadastrar_nome_professor} cadastrado com sucesso")
+        print("Professores cadastrados: ")
+        indice = 0
+        for indice, professor in enumerate(Alunos, start=1):
+                print(f"{indice} - {professor['nome']} {professor['sobrenome']}")
         print()
 
     match funcao:
