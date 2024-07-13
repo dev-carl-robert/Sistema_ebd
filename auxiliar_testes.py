@@ -1,47 +1,37 @@
-from datetime import datetime, time, date, timedelta
+import csv
+from pathlib import Path
+import pandas as pd
+# import re
 
-Domingos = []
+ROOT_PATH = Path(__file__).parent
+caminho_csv = ROOT_PATH / "alunos.csv"
 
-def lista_de_domingos_do_trimestre():
-    ano_atual = datetime.now().year
-    licao = int(input("Qual lição deseja acessar? "))
-    mes_atual = datetime.now().month
-    
-    if mes_atual >= 1 and mes_atual <= 3:
-        trimestre = 1
-        
-    elif mes_atual >= 4 and mes_atual <= 6:
-        trimestre = 2
-        
-    elif mes_atual >= 7 and mes_atual <= 9:
-        trimestre = 3
-        
-    else:
-        trimestre = 4
-    
-    print(f" Estamos no {trimestre} º trimestre")
 
-    trimestres = {
-        1: (date(ano_atual, 1, 1), date(ano_atual, 3, 31)),
-        2: (date(ano_atual, 4, 1), date(ano_atual, 6, 30)),
-        3: (date(ano_atual, 7, 1), date(ano_atual, 9, 30)),
-        4: (date(ano_atual, 10, 1), date(ano_atual, 12, 31))
-    }
-    if trimestre in trimestres:
-        primeiro_dia, ultimo_dia = trimestres[trimestre]
-        dias_do_mes = primeiro_dia
-        
-        while dias_do_mes <= ultimo_dia:
-            if dias_do_mes.weekday() == 6:  # Verifica se é domingo
-                Domingos.append(dias_do_mes)
-            dias_do_mes += timedelta(days=1)
-    else:
-        print("Trimestre inválido. Por favor, escolha um valor entre 1 e 4.")
-        
-    for x in range(1,14):
-        match licao:
-            case x:
-                print(f"acessando dados da {licao}º lição do dia {Domingos[x-1].strftime('%d/%m/%Y')}")
-        break
+nome = input("Qual o nome do aluno? ")
+sobrenome = input("Qual o sobrenome do aluno? ")
+data_de_nascimento = input("Qual a data de nascimento do aluno? ex: 01.01.2002 : ")
+datas_formatadas = pd.to_datetime(data_de_nascimento, format='%d.%m.%Y')
+idade = 2024 - datas_formatadas.year
+sexo = input("Qual o sexo do aluno? ")
+telefone = str(input("Qual o telefone do aluno? ex: 987112233 : "))
+classe = input("Qual a classe do aluno? ")
+
+if caminho_csv.exists():
+    Alunos_df = pd.read_csv(caminho_csv)
+    ultima_matricula = int(Alunos_df['matricula'].iloc[-1])
+    indice = ultima_matricula + 1
+
     
-lista_de_domingos_do_trimestre()
+with open(caminho_csv, "a", encoding="utf-8", newline="") as arquivoAluno:
+    escritorAluno = csv.writer(arquivoAluno)
+    escritorAluno.writerow([indice, nome, sobrenome, idade, (data_de_nascimento.replace(".", "/")), sexo, telefone, classe])
+
+print(Alunos_df)
+
+# excluir
+# Alunos_df = Alunos_df[Alunos_df['nome'] != 'mariana']
+# Alunos_df.to_csv(caminho_csv, index=False, encoding='utf-8')
+
+
+# for row in Alunos_df:
+#     print(row)

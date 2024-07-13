@@ -20,7 +20,7 @@ print("Bem vindo ao Sistema de gestão da Escola Biblica Dominical")
 user = input("Quem está acessando? ")
 print()
 
-senha = input("Digite sua senha: " )
+password = input("Digite sua senha: " )
 print()
 
 print()
