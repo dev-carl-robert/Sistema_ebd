@@ -1,2 +1,3 @@
 matricula,nome,sobrenome,idade,data_de_nascimento,sexo,telefone,classe
-1,robert, cabral, 22, 01/01/2002, masculino, 987871123, jovens
+1,Robert, Cabral, 22, 01/01/2002, M, 987871123, Jovens
+2, anoni, mo, 23, 01/09/2001, F, 98787878, Crianças
